@@ -1,0 +1,27 @@
+<div>
+   
+	<table class="table table-condensed table-bordered table-hover">
+		<thead>
+			<tr>
+				<th> id </th>
+				<th>email</th>
+				<th>password</th>
+				<th>active</th>
+				<th>role</th>
+				<th>edit</th>
+				<th>delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-class-even="'even'" ng-class='{selected: $index==selectedRow}' ng-click='selectUser($index)' ng-repeat="user in users">
+				<td>{{$index + 1}}</td>
+				<td>{{user.email}}</td>
+				<td>{{user.password}}</td>
+				<td>{{user.is_active}}</td>
+				<td>{{user.role}}</td>
+				<td><a class='btn btn-primary' href="/user/{{user._id}}" ng-class='{disabled: index < 0}'>Edit</a></td>
+				<td><a class='btn btn-primary' ng-click='deleteUser(user, $index)' ng-class='{disabled: index < 0}'>Delete</a></td>
+			<tr>
+		</tbody>
+	</table>
+</div>

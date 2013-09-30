@@ -1,0 +1,16 @@
+<h2>User Profile</h2>
+<form ng-submit="saveUser()" >
+	<div>
+	  <label>email</label><input ng-model='user.email'>
+	</div>
+	<div>
+	  <label>password</label><input ng-model='user.password'>
+	</div>
+	<div>
+	  <label>Active</label> <input type='checkbox' ng-model='user.is_active'>
+	</div>
+	<div>
+	  <label>role</label> <input ng-model="user.role">
+	</div>
+	<input type="submit" value="Submit">
+</form>
