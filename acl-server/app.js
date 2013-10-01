@@ -1,4 +1,5 @@
 var express = require('express');
+var RedisStore = require('connect-redis')(express);
 
 var app = express();
 
@@ -6,9 +7,17 @@ app.configure(function(){
   
   app.use(express.favicon());
   //app.use(express.logger('dev'));
+
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
+  app.use(express.cookieParser('my apssword string'));
+  
+  app.use(express.session({
+	  secret: 'my secret string',
+	  store: new RedisStore({ host: 'localhost', port: 3000, client: redis }
+	  //maxAge: 3600000
+  }));
 });
 
 app.configure('development', function(){

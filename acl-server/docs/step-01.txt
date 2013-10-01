@@ -1,0 +1,41 @@
+http://stackoverflow.com/questions/14218725/working-with-sessions-in-express-js
+http://stackoverflow.com/questions/5286073/node-js-server-restart-drops-the-sessions
+http://stackoverflow.com/questions/9291548/how-can-i-find-the-session-id-when-using-express-connect-and-a-session-store
+http://stackoverflow.com/questions/16005730/how-to-create-session-express-js
+http://stackoverflow.com/questions/11187342/mongoose-express-authorisation-on-http-verbs
+http://stackoverflow.com/questions/5522020/how-do-sessions-work-in-express-with-nodejs/11585839#11585839
+
+
+req.session.loggedIn = true;
+==============================
+
+
+https://groups.google.com/forum/#!topic/express-js/de9sf9Ly_rY
+http://www.codeproject.com/Articles/382561/Session-Management-in-Nodejs
+
+try to use "connect": "2.9.0",
+        
+var connect = require('connect');
+
+var app = connect();
+
+app.use(connect.logger('tiny'));
+app.use(connect.static(__dirname + '/public'));
+app.use(connect.query());
+app.use(connect.bodyParser());
+app.use(connect.cookieParser('this is my secret string'));
+app.use(connect.session({
+	cookie: { maxAge: 24 * 60 * 60 * 1000 }
+}));
+
+=====================================
+
+Scenario I: e.g. blogpost
+- GET -> no authentication required
+- POST/PUT/DELETE -> authentication required
+
+Scenario II: e.g. user
+- GET -> authentication required
+- POST/PUT/DELETE -> authentication required plus username of logged in user has to match
+
+req.cookies.name
