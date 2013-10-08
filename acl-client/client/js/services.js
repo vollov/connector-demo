@@ -41,7 +41,7 @@ demoApp.factory('AuthenticationService', function($http, $location,
 		login : function(credentials) {
 			// var login = $http.post('/api/login', credentials);
 			var login = $http({
-				url : '/api/login',
+				url : apiRoot + '/api/login',
 				method : 'POST',
 				data : credentials
 			});

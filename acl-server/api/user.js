@@ -3,7 +3,10 @@ var mongojs = require('mongojs');
 
 module.exports = function(app) {
 	app.get('/api/user', function(req, res) {
-		
+
+		if(req.session.email) {
+			console.log('Last user looked up was: %j ',req.session.email);
+		};
 		db.find('user',{},{},10, function(err, users) {
 			if (!err) {
 				return res.send(users);
@@ -17,6 +20,8 @@ module.exports = function(app) {
 		var id = req.params.id;
 		db.findOne('user', {'_id': mongojs.ObjectId(id)}, {}, function(err, user){
 			if (!err) {
+				console.log('look up user.email = %j',user.email);
+				req.session.email = user.email;
 				return res.send(user);
 			} else {
 				return console.log(err);
@@ -51,4 +56,10 @@ module.exports = function(app) {
 			}
 		});
 	});
+	
+	app.post('/api/login', function(req, res){
+		console.log('getting credential from login = %j', req.credential)
+		res.send(req.body);
+	});
+	
 };

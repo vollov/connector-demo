@@ -1,6 +1,6 @@
 'use strict';
 
-var demoApp = angular.module('appModule', [ 'ngResource' ]);
+var demoApp = angular.module('appModule', [ 'ngResource', 'ngCookies' ]);
 
 demoApp.config(function($routeProvider, $locationProvider) {
 	
@@ -10,6 +10,9 @@ demoApp.config(function($routeProvider, $locationProvider) {
 		templateUrl : 'views/settings.html'
 	}).when('/about', {
 		templateUrl : 'views/public/about.html'
+	}).when('/login', {
+		controller : 'LoginCtrl',
+		templateUrl : 'views/public/login.html'
 	}).when('/users', {
 		controller : 'UserCtrl',
 		templateUrl : 'views/user/list.html'
@@ -24,7 +27,6 @@ demoApp.config(function($routeProvider, $locationProvider) {
 	});
 	
 	$locationProvider.html5Mode(true);
-	//delete $httpProvider.defaults.headers.common['X-Requested-With'];
 });
 
 demoApp.config(function($httpProvider) {
