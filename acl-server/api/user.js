@@ -58,7 +58,7 @@ module.exports = function(app) {
 	});
 	
 	app.post('/api/login', function(req, res){
-		console.log('getting credential from login = %j', req.credential)
+		console.log('getting credential from login = %j', req.body)
 		res.send(req.body);
 	});
 	

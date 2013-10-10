@@ -1,9 +1,10 @@
 'use strict';
 
-var apiRoot = 'http://10.100.78.143\\:3000';
+var resourceRoot = 'http://192.168.1.104\\:3000';
+var httpRoot = 'http://192.168.1.104:3000';
 
 demoApp.factory('User', function($resource) {
-	return $resource(apiRoot + '/api/user/:id', {id: '@id'}, {
+	return $resource(resourceRoot + '/api/user/:id', {id: '@id'}, {
         update: {method:'PUT'}
     });
 });
@@ -41,7 +42,7 @@ demoApp.factory('AuthenticationService', function($http, $location,
 		login : function(credentials) {
 			// var login = $http.post('/api/login', credentials);
 			var login = $http({
-				url : apiRoot + '/api/login',
+				url : httpRoot + '/api/login',
 				method : 'POST',
 				data : credentials
 			});
