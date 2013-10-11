@@ -39,3 +39,7 @@ Scenario II: e.g. user
 - POST/PUT/DELETE -> authentication required plus username of logged in user has to match
 
 req.cookies.name
+
+===============
+secured restful
+http://stackoverflow.com/questions/15496915/how-to-implement-a-secure-rest-api-with-node-js

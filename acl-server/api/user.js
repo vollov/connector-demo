@@ -4,6 +4,15 @@ var mongojs = require('mongojs');
 module.exports = function(app) {
 	app.get('/api/user', function(req, res) {
 
+		if (req.session.isValid) {
+			console.log("There is an existing session.");
+		} else {
+			req.session.isValid = true;
+			console.log("New session.");
+			console.log('Old session ID: ' + req.header('Cookie'));
+			console.log('New session ID: ' + req.session.id);
+		}
+		
 		if(req.session.email) {
 			console.log('Last user looked up was: %j ',req.session.email);
 		};
@@ -59,6 +68,16 @@ module.exports = function(app) {
 	
 	app.post('/api/login', function(req, res){
 		console.log('getting credential from login = %j', req.body)
+		var email = req.body.email;
+		var password = req.body.password;
+		db.findOne('user', {'email': email}, {'passsword' : 1}, function(err, user){
+			if(!err) {
+				
+			} else {
+				return 
+			}
+		});
+		
 		res.send(req.body);
 	});
 	
