@@ -1,3 +1,5 @@
+npm install hiredis redis
+
 [1] list keys
 redis>keys *
 
@@ -15,3 +17,12 @@ type key_name
 
 [5] get string
 get  "sess:nub1S-T7MRqXSnYe6RCa88BB"
+
+[6] remove key
+FLUSHDB       - Removes data from your connection's CURRENT database.
+FLUSHALL      - Removes data from ALL databases.
+del key
+
+[6] get hash key
+hgetall KEY
+hget KEY SUBKEY

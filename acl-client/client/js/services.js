@@ -1,12 +1,13 @@
 'use strict';
 
-var resourceRoot = 'http://192.168.1.104\\:3000';
-var httpRoot = 'http://192.168.1.104:3000';
+var resourceRoot = 'http://10.100.78.143\\:3000';
+var httpRoot = 'http://10.100.78.143:3000';
 
-demoApp.factory('User', function($resource) {
-	return $resource(resourceRoot + '/api/user/:id', {id: '@id'}, {
-        update: {method:'PUT'}
-    });
+demoApp.factory('User', function($resource, SessionService) {
+	var tokenid = SessionService.get('tid');
+	return $resource(resourceRoot + '/api/user/:id', {id: '@id', tid: tokenid}, {
+		update: {method:'PUT'}
+	});
 });
 
 demoApp.factory('SessionService', function(){
@@ -26,11 +27,11 @@ demoApp.factory('SessionService', function(){
 demoApp.factory('AuthenticationService', function($http, $location,
 		SessionService, FlashService) {
 	var cacheSession = function() {
-		SessionService.set('authenticated', true);
+		SessionService.set('tid', true);
 	};
 
 	var uncacheSession = function() {
-		SessionService.unset('authenticated');
+		SessionService.unset('tid');
 	};
 
 	var loginError = function(response) {

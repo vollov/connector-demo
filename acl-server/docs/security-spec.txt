@@ -1,0 +1,53 @@
+Each call to api will generate an session.
+
+current session id = 
+req.session.id
+
+[1] client side
+
+[1.a]if request url not in auth_urls, call AuthenticationService.isLoggedIn().
+	if return false, call AuthenticationService.logIn();
+	else redirect to requested page.
+	
+[1.b] login
+	call server:3000/api/login with credential=hash(username+password)
+	if success. store the server_hash=hash(username+password, sessionid) in cookie	
+	
+Given a template /path/:verb and parameter {verb:'greet', salutation:'Hello'} results in URL /path/greet?salutation=Hello.
+
+	
+[1.c] each request add parameter: server_hash
+
+secured restful
+http://stackoverflow.com/questions/15496915/how-to-implement-a-secure-rest-api-with-node-js
+
+[1] server side.
+for login, will hash the username and password and create a token id and set redis expiration time to 30 minutes
+
+for each request will lookup redis to see if sessionid is there
+
+
+[3] encryption
+
+
+
+npm install node-uuid
+var uuid = require('node-uuid');
+// Generate a v1 (time-based) id
+uuid.v1(); // -> '6c84fb90-12c4-11e1-840d-7b25c5ee775a'
+// Generate a v4 (random) id
+uuid.v4(); // -> '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
+
+	{3.1} Sign an array
+	signer = Signer('secret-key');
+	signed_string = signer.sign([key, value, tokenid]);
+	
+	fixed_size_string = crypt_hash(data) [one way function] sha1, rsa
+	
+	
+	{3.2} Unsign a string
+	signer = Signer('secret-key');
+	alist = signer.unsign(signed_string);
+	alist.equals([key, value, tokenid]);
+	
+	{3.3} generate RFC4122 UUIDS

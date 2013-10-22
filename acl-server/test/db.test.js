@@ -8,7 +8,7 @@ describe('Test mongojs wrapper -- db module', function() {
 	beforeEach(function runBeforeEach() {
 		var user = {'password': 'blah', 'is_active': true, 'email': 'insert@gmail.ca','role':2};
 		db.save('user', user);
-		console.log('save user ' + user.email);
+		//console.log('save user ' + user.email);
 	});
 	
 	afterEach(function runAfterEach() {
