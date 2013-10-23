@@ -1,5 +1,6 @@
-var db = require('../lib/db.js');
-var mongojs = require('mongojs');
+var db = require('../lib/db.js')
+	, mongojs = require('mongojs')
+	, security = require('../lib/security');
 
 module.exports = function(app) {
 	app.get('/api/user', function(req, res) {
@@ -78,10 +79,21 @@ module.exports = function(app) {
 		var username = req.body.username;
 		var password = req.body.password;
 		db.findOne('user', {'email': username}, {'password':1}, function(err, user){
+			console.log('user is = %j', user);
 			if(!err) {
-				console.log('hi, pwd =%j', user);
+				if(user == null){
+					console.log('user not in db');
+					res.send(401, { message : 'user name is not existing' });
+				}else{
+					if(security.hash(password) == user['password']) {
+						console.log('user logged in');
+						res.send(200);
+					}else{
+						res.send(401, { message : 'incorrect password' });
+					}
+				}
 			} else {
-				res.send(401, { message : 'user name is not existing' });
+				res.send(500, { message : 'Error when querying database' });
 			}
 		});
 		
