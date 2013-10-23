@@ -20,6 +20,7 @@ Given a template /path/:verb and parameter {verb:'greet', salutation:'Hello'} re
 
 secured restful
 http://stackoverflow.com/questions/15496915/how-to-implement-a-secure-rest-api-with-node-js
+https://vickev.com/#!/article/authentication-in-single-page-applications-node-js-passportjs-angularjs
 
 [1] server side.
 for login, will hash the username and password and create a token id and set redis expiration time to 30 minutes

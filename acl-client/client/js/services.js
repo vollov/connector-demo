@@ -1,7 +1,7 @@
 'use strict';
-
-var resourceRoot = 'http://10.100.78.143\\:3000';
-var httpRoot = 'http://10.100.78.143:3000';
+//10.100.78.143
+var resourceRoot = 'http://localhost\\:3000';
+var httpRoot = 'http://localhost:3000';
 
 demoApp.factory('User', function($resource, SessionService) {
 	var tokenid = SessionService.get('tid');

@@ -66,15 +66,22 @@ module.exports = function(app) {
 		});
 	});
 	
+	/** 
+	 * login logic:
+	 * 		if db has email and password:
+	 *			generate token id and send back
+	 * 		else:
+	 *			return 401 and error message
+	 */
 	app.post('/api/login', function(req, res){
 		console.log('getting credential from login = %j', req.body)
-		var email = req.body.email;
+		var username = req.body.username;
 		var password = req.body.password;
-		db.findOne('user', {'email': email}, {'passsword' : 1}, function(err, user){
+		db.findOne('user', {'email': username}, {'password':1}, function(err, user){
 			if(!err) {
-				
+				console.log('hi, pwd =%j', user);
 			} else {
-				return 
+				res.send(401, { message : 'user name is not existing' });
 			}
 		});
 		

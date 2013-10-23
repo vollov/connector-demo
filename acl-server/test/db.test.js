@@ -24,6 +24,7 @@ describe('Test mongojs wrapper -- db module', function() {
 			db.find('user', {}, {'email' : 1,  'role':1}, 10, function(err, users) {
 				should.not.exist(err);
 				console.log('return ' + users.length + ' users.');
+				
 				users.should.have.lengthOf(6);
 			});
 		});
@@ -45,9 +46,9 @@ describe('Test mongojs wrapper -- db module', function() {
 				should.not.exist(err);
 				console.log('updated user = %j', doc);
 			});
-			db.findOne('user', {'email': 'insert@gmail.ca'}, {'is_active': 1, 'email': 1, 'role':1}, function(err, user) {
+			db.findOne('user', {'email': 'insert@gmail.ca'}, {'is_active': 1, 'password':1, 'email': 1, 'role':1}, function(err, user) {
 				should.not.exist(err);
-				console.log('return user ' + user.email);
+				console.log('findOne function with projects: return user %j',user);
 				user.should.have.property('is_active', false);
 				user.should.have.property('role', 1);
 			});
