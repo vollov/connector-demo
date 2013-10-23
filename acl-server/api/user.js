@@ -87,6 +87,10 @@ module.exports = function(app) {
 				}else{
 					if(security.hash(password) == user['password']) {
 						console.log('user logged in');
+						var uuid = security.uuid();
+						var tokenid = security.hash(username + uuid);
+						
+						
 						res.send(200);
 					}else{
 						res.send(401, { message : 'incorrect password' });

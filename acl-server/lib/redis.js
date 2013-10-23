@@ -9,10 +9,20 @@ module.exports = {
 	 * call back:	function like:
 	 * function (err, reply) {console.log(reply.toString());}
 	 */
-	save : function(values, callback){
+	save : function(key, values, callback){
 		client.hmset(values, callback);
+		// Expire in 3600 seconds
+		client.expire(key, 3600);
 	},
 
+	remove : function(key, callback){
+		client.del(key, callback);
+	},
+	
+	exists : function(key, callback){
+		client.exists(key, callback);
+	},
+	
 	/** 
 	 * get key-value pairs
 	 * 
@@ -35,8 +45,12 @@ module.exports = {
 	 * call back:	function like:
 	 * function (err, reply) {console.log(reply.toString());}
 	 */
-	removesubkey: function(values, callback){
+	removeSubkey: function(values, callback){
 		client.hdel(values, callback);
+	},
+	
+	hget: function(values, callback){
+		client.hget(values, callback);
 	},
 	
 	/** 
@@ -46,7 +60,7 @@ module.exports = {
 	 * call back:	function like:
 	 * function (err, reply) {console.log(reply.toString());}
 	 */
-	exists: function(values, callback){
+	subkeyExists: function(values, callback){
 		client.hexists(values, callback);
 	}
 }
