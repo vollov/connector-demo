@@ -79,29 +79,26 @@ module.exports = function(app) {
 		var username = req.body.username;
 		var password = req.body.password;
 		db.findOne('user', {'email': username}, {'password':1}, function(err, user){
-			console.log('user is = %j', user);
+			console.log('findOne return a user = %j', user);
 			if(!err) {
 				if(user == null){
 					console.log('user not in db');
-					res.send(401, { message : 'user name is not existing' });
+					return res.send(401, { message : 'user name is not existing' });
 				}else{
 					if(security.hash(password) == user['password']) {
+//					if('30274c47903bd1bac7633bbf09743149ebab805f' == user['password']) {
 						console.log('user logged in');
 						var uuid = security.uuid();
 						var tokenid = security.hash(username + uuid);
-						
-						
-						res.send(200);
+						return res.send(200, { tokenid : tokenid});
 					}else{
-						res.send(401, { message : 'incorrect password' });
+						return res.send(401, { message : 'incorrect password' });
 					}
 				}
 			} else {
-				res.send(500, { message : 'Error when querying database' });
+				return res.send(500, { message : 'Error when querying database' });
 			}
 		});
-		
-		res.send(req.body);
 	});
 	
 };

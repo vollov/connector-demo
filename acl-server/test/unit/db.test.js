@@ -8,7 +8,7 @@ describe('Test mongojs wrapper -- db module', function() {
 	
 	var email = 'insert@gmail.ca';
 
-	beforeEach(function(done) {
+	afterEach(function(done) {
 		db.remove('user', {'email': email}, function(err, numberOfRemovedDocs) {
 			should.not.exist(err);
 			console.log('delete %j user', numberOfRemovedDocs);
