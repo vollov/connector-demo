@@ -1,6 +1,7 @@
 var db = require('../lib/db.js')
 	, mongojs = require('mongojs')
-	, security = require('../lib/security');
+	, security = require('../lib/security')
+	, redisService = require('../lib/redis');
 
 module.exports = function(app) {
 	app.get('/api/user', function(req, res) {
@@ -87,10 +88,16 @@ module.exports = function(app) {
 				}else{
 					if(security.hash(password) == user['password']) {
 //					if('30274c47903bd1bac7633bbf09743149ebab805f' == user['password']) {
-						console.log('user logged in');
+						
 						var uuid = security.uuid();
-						var tokenid = security.hash(username + uuid);
-						return res.send(200, { tokenid : tokenid});
+						var token_id = security.hash(username + uuid);
+						console.log('return token:' + token_id);
+						
+						var record = [token_id, 'username', username, 'role', user['role']];
+						redisService.save(token_id, record, function(err, reply){
+							console.log(reply.toString());
+						});
+						return res.send(200, { tokenid : token_id});
 					}else{
 						return res.send(401, { message : 'incorrect password' });
 					}

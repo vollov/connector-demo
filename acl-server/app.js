@@ -12,15 +12,15 @@ app.configure(function(){
   app.use(express.methodOverride());
   
   app.use(express.cookieParser('my apssword string'));
-  
-  app.use(express.session({
-	secret: 'my secret string',
-	store: new RedisStore({ host: 'localhost', port: '6379', ttl: 3600})
+  app.use(express.session());
+//  app.use(express.session({
+//	secret: 'my secret string',
+//	store: new RedisStore({ host: 'localhost', port: '6379', ttl: 3600})
 //	store: MemStore({
 //		reapInterval: 60000 * 10
 //	}),
 //	maxAge: 3600000
-  }));
+//  }));
   
   app.use(app.router);
 });
