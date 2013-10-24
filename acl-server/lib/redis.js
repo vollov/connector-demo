@@ -12,7 +12,7 @@ module.exports = {
 	save : function(key, values, callback){
 		client.hmset(values, callback);
 		// Expire in 3600 seconds
-		client.expire(key, 10);
+		client.expire(key, 3600);
 	},
 
 	remove : function(key, callback){
