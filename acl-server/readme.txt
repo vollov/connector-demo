@@ -4,6 +4,12 @@ https://vickev.com/#!/article/authentication-in-single-page-applications-node-js
 step-01 - api server with test framework
 step-02 - basic role auth module 
 
+[1] To setup test environment in a fresh workspace:
+$mongo localhost:27017/rental schema.js
+$redis-cli
+>hmset f2cb3e8d653f46008272113c6c72422843901ef3 username wendy@abc.com role 2
+
+f2cb3e8d653f46008272113c6c72422843901ef3
 
 session related codes
 //		if (req.session.isValid) {

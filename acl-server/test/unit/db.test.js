@@ -11,17 +11,17 @@ describe('Test mongojs wrapper -- db module', function() {
 	afterEach(function(done) {
 		db.remove('user', {'email': email}, function(err, numberOfRemovedDocs) {
 			should.not.exist(err);
-			console.log('delete %j user', numberOfRemovedDocs);
+			// console.log('delete %j user', numberOfRemovedDocs);
 			done();
 		});
 	});
 	
 	describe('Test find function', function() {
-		console.log('Start test find function...');
+		// console.log('Start test find function...');
 		it('should find 5 users in test db', function(done) {
 			db.find('user', {}, {'email' : 1,  'role':1}, 10, function(err, users) {
 				should.not.exist(err);
-				console.log('return ' + users.length + ' users.');
+				// console.log('return ' + users.length + ' users.');
 				users.should.have.lengthOf(5);
 				done();
 			});

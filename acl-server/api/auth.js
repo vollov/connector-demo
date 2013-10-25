@@ -19,7 +19,7 @@ module.exports = function(app) {
 //			console.log('findOne return a user = %j', user);
 			if(!err) {
 				if(user == null){
-					console.log('user not in db');
+					// console.log('user not in db');
 					return res.send(401, { message : 'user name is not existing' });
 				}else{
 					if(security.hash(password) == user['password']) {
