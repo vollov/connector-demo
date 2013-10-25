@@ -1,6 +1,6 @@
 {
-    "name": "node-demo",
-    "description": "NodeJS demo Application",
+    "name": "acl-server",
+    "description": "NodeJS demo for RESTful server",
     "version": "0.0.1",
     "private": true,
     "scripts": {

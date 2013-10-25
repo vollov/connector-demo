@@ -18,8 +18,7 @@ module.exports = function(app) {
 		var id = req.params.id;
 		db.findOne('user', {'_id': mongojs.ObjectId(id)}, {}, function(err, user){
 			if (!err) {
-				console.log('look up user.email = %j',user.email);
-
+				//console.log('look up user.email = %j',user.email);
 				return res.send(user);
 			} else {
 				return console.log(err);

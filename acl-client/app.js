@@ -21,8 +21,6 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-//require('./routes/index')(app);
-
 app.get('*', function(req,res){
   res.sendfile('index.html', { root: path.resolve(__dirname + '/client') });
 });

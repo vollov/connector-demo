@@ -1,14 +1,17 @@
 {
-    "name": "node-demo",
-    "description": "NodeJS demo Application",
+    "name": "acl-client",
+    "description": "NodeJS demo for angularjs client",
     "version": "0.0.1",
     "private": true,
     "scripts": {
       "start": "supervisor app.js",
-      "test": "mocha -d $(find test -name '*.js')"
+      "test": "karma start config/karma.conf.js $*"
     },
     "dependencies": {
-        "express": "3.x"
+        "express": "3.x",
+        "karma-junit-reporter" : "*",    
+        "karma-jasmine" : "*",
+        "karma-ng-scenario" : "*"
     },
     "devDependencies": {
       "should": ">= 0.0.1"
