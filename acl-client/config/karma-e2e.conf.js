@@ -6,13 +6,15 @@ module.exports = function(config){
         'test/e2e/**/*.js'
     ],
 
-    autoWatch : false,
+    urlRoot : '/__e2e/',        
+    autoWatch : true,
+//    autoWatch : false,
     browsers : ['Chrome'],
     frameworks: ['ng-scenario'],
     singleRun : true,
 
     proxies : {
-      '/': 'http://localhost:5000/'
+      '/': 'http://localhost:5000'
     },
 
     plugins : [
@@ -27,6 +29,5 @@ module.exports = function(config){
       outputFile: 'test_out/e2e.xml',
       suite: 'e2e'
     }
-
 })}
 

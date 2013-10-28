@@ -26,3 +26,7 @@ npm install -g karma
 karma init karma.config.js
 
 
+https://github.com/angular/protractor
+https://github.com/vollov/angularjs-seed-repo
+
+npm install -g grunt-cli

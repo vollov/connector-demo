@@ -26,17 +26,17 @@ demoApp.factory('SessionService', function(){
 
 demoApp.factory('AuthenticationService', function($http, $location,
 		SessionService, FlashService) {
-	var cacheSession = function() {
-		SessionService.set('tid', true);
-	};
-
-	var uncacheSession = function() {
-		SessionService.unset('tid');
-	};
-
-	var loginError = function(response) {
-		FlashService.show(response.flash);
-	};
+//	var cacheSession = function() {
+//		SessionService.set('tid', true);
+//	};
+//
+//	var uncacheSession = function() {
+//		SessionService.unset('tid');
+//	};
+//
+//	var loginError = function(response) {
+//		FlashService.show(response.flash);
+//	};
 
 	// these routes map to stubbed API endpoints in config/server.js
 	return {
