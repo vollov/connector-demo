@@ -1,2 +1,17 @@
 [1]view spec:
 
+
+The project will be a server and client architecture.
+
+The admin should be able to 
+1)login 
+2)view most recent user email list.
+3)delete any message
+4)reset password
+
+a visitor will be able to: 
+1)post a message.
+
+a message processor will be able to 
+1) put messages into an email(required).
+name*/phone*/email*/city/message
