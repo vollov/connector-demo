@@ -8,13 +8,13 @@
       "test": "karma start config/karma.conf.js $*"
     },
     "dependencies": {
-        "express": "3.x",
+        "express": "3.x"
+    },
+    "devDependencies": {
         "karma-junit-reporter" : "*",    
         "karma-jasmine" : "*",
         "karma-ng-scenario" : "*",
-        "karma-coverage": "*"
-    },
-    "devDependencies": {
+        "karma-coverage": "*",
       "should": ">= 0.0.1"
     }
 }
