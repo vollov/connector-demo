@@ -4,6 +4,8 @@ curl -i http://localhost:3000/api/user
 [2]unit test with mocha
 Note mocha has sync and async tests
 
+
+
 Synchronous code
 
 When testing synchronous code, omit the callback and Mocha will automatically continue on to the next test.

@@ -21,7 +21,7 @@ describe('Test mongojs wrapper -- db module', function() {
 		it('should find 5 users in test db', function(done) {
 			db.find('user', {}, {'email' : 1,  'role':1}, 10, function(err, users) {
 				should.not.exist(err);
-				// console.log('return ' + users.length + ' users.');
+				console.log('return ' + users.length + ' users.');
 				users.should.have.lengthOf(5);
 				done();
 			});

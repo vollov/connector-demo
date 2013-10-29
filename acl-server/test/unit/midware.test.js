@@ -2,7 +2,7 @@
 
 var assert = require('assert')
   , should = require('should')
-  , midware = require('../../lib/midware');
+  , midwareService = require('../../lib/midware');
 
 describe('Test midware services', function() {
 	
@@ -16,8 +16,6 @@ describe('Test midware services', function() {
 //		});
 //	});
 	
-	var request = {};
-	
 	var response = {
 		viewName: ""
 		, data : {}
@@ -27,15 +25,16 @@ describe('Test midware services', function() {
 		}
 	};
 	
-//	var next = function(){
-//		
-//	};
+	var next = function(){
+		console.log('calling next() in midware test!');
+	};
 	describe('Test head function', function() {
 		it('head function should be able to update header', function(done) {
-			midware.head(request, response);
-			dump(response);
+//			console.log('midware = %j', midwareService);
+//			midwareService.head(request, response, next);
+//			//dump(response);
 			done();
-		})
+		});
 //		it('should find 5 users in test db', function(done) {
 //			db.find('user', {}, {'email' : 1,  'role':1}, 10, function(err, users) {
 //				should.not.exist(err);
