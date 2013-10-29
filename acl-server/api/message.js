@@ -4,47 +4,47 @@ var db = require('../lib/db.js')
 	, redisService = require('../lib/redis');
 
 module.exports = function(app) {
-	app.get('/api/user', function(req, res) {
-		db.find('user',{},{},10, function(err, users) {
+	app.get('/api/message', function(req, res) {
+		db.find('message',{},{},10, function(err, messages) {
 			if (!err) {
-				return res.send(users);
+				return res.send(messages);
 			} else {
 				return console.log(err);
 			}
 		});
 	});
 
-	app.get('/api/user/:id', function(req, res){
+	app.get('/api/message/:id', function(req, res){
 		var id = req.params.id;
-		db.findOne('user', {'_id': mongojs.ObjectId(id)}, {}, function(err, user){
+		db.findOne('message', {'_id': mongojs.ObjectId(id)}, {}, function(err, message){
 			if (!err) {
-				//console.log('look up user.email = %j',user.email);
-				return res.send(user);
+				//console.log('look up message.email = %j',message.email);
+				return res.send(message);
 			} else {
 				return console.log(err);
 			}
 		});
 	});
 	
-	app.post('/api/user', function(req, res){
-		db.save('user', req.body)
+	app.post('/public/message', function(req, res){
+		db.save('message', req.body)
 		res.send(req.body);
 	});
 	
-	app.put('/api/user', function(req, res){
+	app.put('/api/message', function(req, res){
 		var id = req.body._id;
-		console.log('editing user id =' + id);
+		console.log('editing message id =' + id);
 		delete req.body['_id']
-		db.update('user',  {'_id': mongojs.ObjectId(id)}, {$set: req.body}, {upsert: false, multi:false},
+		db.update('message',  {'_id': mongojs.ObjectId(id)}, {$set: req.body}, {upsert: false, multi:false},
 			function(){
 				res.send(req.body);
 		});
 	});
 	
-	app.delete('/api/user/:id', function(req, res){
+	app.delete('/api/message/:id', function(req, res){
 		var id = req.params.id;
 		
-		db.remove('user', {'_id': mongojs.ObjectId(id)}, function(err, user){
+		db.remove('message', {'_id': mongojs.ObjectId(id)}, function(err, message){
 			if (!err) {
 				res.json(true);
 			} else {

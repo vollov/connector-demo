@@ -5,15 +5,15 @@ var request = require('supertest')
 	, redisService = require('../../lib/redis')
 	, app = require('../../app').app;
 
-describe('Test user api', function() {
+describe('Test message api', function() {
 
-	var url_user_list = '/api/user';
+	var url_message_list = '/api/message';
 	var token_id = 'f2cb3e8d653f46008272113c6c72422843901ef3';
 	
-	describe('Test get a list of user: GET->' + url_user_list, function() {
-		it('request should fail when visit /api/user without tokenid', function(done) {
+	describe('Test get a list of message: GET->' + url_message_list, function() {
+		it('request should fail when visit /api/message without tokenid', function(done) {
 			request(app)
-			.get(url_user_list)
+			.get(url_message_list)
 			.expect('Content-Type', /json/)
 			.expect('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With')
 			//.expect('Content-Length', '20')
@@ -26,9 +26,9 @@ describe('Test user api', function() {
 			});
 		});
 		
-		it('request should fail when visit /api/user with invalid tokenid', function(done) {
+		it('request should fail when visit /api/message with invalid tokenid', function(done) {
 			request(app)
-			.get(url_user_list + '?tid=invalidid')
+			.get(url_message_list + '?tid=invalidid')
 			.expect('Content-Type', /json/)
 			.expect('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With')
 			//.expect('Content-Length', '20')
@@ -40,9 +40,9 @@ describe('Test user api', function() {
 			});
 		});
 		
-		it('should return 5 users for url /api/user', function(done) {
+		it('should return 5 messages for url /api/message', function(done) {
 			request(app)
-			.get(url_user_list + '?tid=' + token_id)
+			.get(url_message_list + '?tid=' + token_id)
 			.expect('Content-Type', /json/)
 			.expect('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With')
 			//.expect('Content-Length', '20')
