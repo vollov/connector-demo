@@ -1,8 +1,8 @@
 'use strict';
 
-describe('Test all services in the acl-client', function() {
+describe('\nTest all services in the acl-client\n', function() {
 
-	describe('Test SessionService', function() {
+	xdescribe('Test SessionService', function() {
 		var sessionService;
 		
 		beforeEach(function(){
@@ -22,19 +22,46 @@ describe('Test all services in the acl-client', function() {
 		});
 	});
 	
-	describe('Test AuthenticationService', function() {
-		
-		var authenticationService, sessionService, $httpBackend;
-		var credentials = {
-				username: 'mary@demo.org',
-				password: 'passwd'
-		}
+	describe('Test FlashService', function () {
+		var flashService, rootScope;
 		
 		beforeEach(function(){
 			module('appModule');
-			inject(function(AuthenticationService, SessionService) {
+			inject(function(FlashService,$injector) {
+				rootScope = $injector.get('$rootScope');
+//				flashService = $injector.get('FlashService');
+				flashService = FlashService;
+			});
+		});
+		
+		it('should be able to set/get/clear $rootScope.flash', function() {
+			expect(flashService.get()).toBe(undefined);
+			flashService.set('user name is not existing');
+			//rootScope.$digest();
+			expect(flashService.get()).toBe('user name is not existing');
+			flashService.clear();
+			expect(flashService.get()).toBe('');
+		});
+	});
+	
+	describe('Test AuthenticationService', function() {
+		
+		var authenticationService, sessionService,flashService,
+			$httpBackend, rootScope;
+		var credentials = {
+				username: 'mary@demo.org',
+				password: 'passwd'
+		};
+		
+		beforeEach(function(){
+			module('appModule');
+			inject(function(AuthenticationService, SessionService, 
+					FlashService,$injector) {
 				authenticationService = AuthenticationService;
 				sessionService = SessionService;
+				
+				rootScope = $injector.get('$rootScope');
+				flashService = FlashService;
 			}, function(_$httpBackend_){
 				$httpBackend = _$httpBackend_;
 			});
@@ -57,14 +84,39 @@ describe('Test all services in the acl-client', function() {
 			.respond(200, 
 					{ tokenid : 'f2cb3e8d653f46008272113c6c72422843902ef8'});
 			authenticationService.login(credentials);
+			$httpBackend.flush();
 			expect(authenticationService.isLoggedIn()).toBeTruthy();
+			
 			sessionService.unset('tid');
 			expect(authenticationService.isLoggedIn()).toBeFalsy();
 		});
-//		
-//		it('should be able to login fail with bad credentials', function() {
-//			
-//		});
+		
+		it('login should be able to handle respons for non existing username', function() {
+			$httpBackend.expectPOST('http://localhost:3000/public/login', credentials)
+			.respond(401, { message : 'user name is not existing' });
+			authenticationService.login(credentials);
+			$httpBackend.flush();
+			expect(authenticationService.isLoggedIn()).toBeFalsy();
+			expect(flashService.get()).toBe('user name is not existing');
+		});
+		
+		it('login should be able to handle respons for bad password', function() {
+			$httpBackend.expectPOST('http://localhost:3000/public/login', credentials)
+			.respond(401, { message : 'incorrect password' });
+			authenticationService.login(credentials);
+			$httpBackend.flush();
+			expect(authenticationService.isLoggedIn()).toBeFalsy();
+			expect(flashService.get()).toBe('incorrect password');
+		});
+		
+		it('login should be able to handle respons for DB error', function() {
+			$httpBackend.expectPOST('http://localhost:3000/public/login', credentials)
+			.respond(500, { message : 'Error when querying database' });
+			authenticationService.login(credentials);
+			$httpBackend.flush();
+			expect(authenticationService.isLoggedIn()).toBeFalsy();
+			expect(flashService.get()).toBe('Error when querying database');
+		});
 //		
 //		it('should be able to logout in any condition', function() {
 //			

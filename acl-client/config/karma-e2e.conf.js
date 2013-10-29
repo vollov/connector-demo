@@ -5,7 +5,9 @@ module.exports = function(config){
     files : [
         'test/e2e/**/*.js'
     ],
-
+ // list of files to exclude
+    exclude : ['test/e2e/lib/angular/angular-scenario.js'],
+    
     urlRoot : '/__e2e/',        
     autoWatch : true,
 //    autoWatch : false,

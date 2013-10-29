@@ -27,7 +27,7 @@ demoApp.factory('SessionService', function(){
 demoApp.factory('AuthenticationService', function($http, $location,
 		SessionService, FlashService) {
 	var cacheSession = function(value) {
-		console.log('calling cacheSession with tid=' + value);
+		console.log('calling cacheSession! tid=' + value);
 		SessionService.set('tid', value);
 	};
 
@@ -36,23 +36,40 @@ demoApp.factory('AuthenticationService', function($http, $location,
 	};
 
 	var loginError = function(response) {
-		FlashService.show(response.flash);
+		console.log('calling loginError!');
+		FlashService.set(response.message);
 	};
 
 	// these routes map to stubbed API endpoints in config/server.js
 	return {
+//		login : function(credentials) {
+//			console.log('calling AuthenticationService.login! ');
+//			// var login = $http.post('/api/login', credentials);
+//			var login = $http({
+//				url : httpRoot + '/public/login',
+//				method : 'POST',
+//				data : credentials
+//			});
+//			login.success(cacheSession);
+//			login.success(FlashService.clear);
+//			login.error(loginError);
+//			return login;
+//		},
 		login : function(credentials) {
-			console.log('calling AuthenticationService.login! ');
-			// var login = $http.post('/api/login', credentials);
-			var login = $http({
-				url : httpRoot + '/public/login',
-				method : 'POST',
-				data : credentials
+			return $http.post(httpRoot + '/public/login', credentials).
+			success(function(response,status){
+				console.log('calling AuthenticationService.login.success!');
+				if(status == 200){
+					cacheSession(response.tokenid);
+					FlashService.clear();
+				}else{
+					loginError(response);
+				}
+			}).
+			error(function(response,status){
+				console.log('calling AuthenticationService.login.error!');
+				loginError(response);
 			});
-			login.success(cacheSession('xxx'));
-			login.success(FlashService.clear);
-			login.error(loginError);
-			return login;
 		},
 		logout : function() {
 			var logout = $http.get('/public/logout');
@@ -65,16 +82,22 @@ demoApp.factory('AuthenticationService', function($http, $location,
 	};
 });
 
-demoApp.factory("FlashService", function($rootScope) {
+demoApp.factory("FlashService", ['$rootScope', function($rootScope) {
 	  return {
-	    show: function(message) {
-	      $rootScope.flash = message;
-	    },
-	    clear: function() {
-	      $rootScope.flash = "";
-	    }
+		set: function(message) {
+			console.log('calling FlashService.set()!');
+			$rootScope.flash = message;
+		},
+		clear: function() {
+			$rootScope.flash = "";
+		},
+		get: function(){
+			console.log('calling FlashService.get()!');
+			//dump($rootScope);
+			return $rootScope.flash;
+		}
 	  }
-	});
+	}]);
 
 //demoApp.run(function($rootScope, $location, $cookieStore, AuthenticationService) {
 //	var routesThatRequireAuth = [ '/users','/settings' ];
