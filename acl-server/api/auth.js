@@ -41,4 +41,9 @@ module.exports = function(app) {
 			}
 		});
 	});
+	
+	app.get('/public/routes', function(req, res){
+		return res.send(200, {routes: ['/logout','/about']});
+	});
+	}
 }

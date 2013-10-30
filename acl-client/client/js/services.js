@@ -83,7 +83,7 @@ demoApp.factory('AuthenticationService', function($http, $location,
 });
 
 demoApp.factory("FlashService", ['$rootScope', function($rootScope) {
-	  return {
+	return {
 		set: function(message) {
 			console.log('calling FlashService.set()!');
 			$rootScope.flash = message;
@@ -96,9 +96,28 @@ demoApp.factory("FlashService", ['$rootScope', function($rootScope) {
 			//dump($rootScope);
 			return $rootScope.flash;
 		}
-	  }
-	}]);
+	}
+}]);
 
+demoApp.run(function($rootScope, $location, $http, AuthenticationService){
+	var routesThatRequireAuth = [];
+	$rootScope.$on('$routeChangeStart', function(event, next, current) {
+		$http.post(httpRoot + '/public/login', credentials).
+		success(function(response,status){
+			routesThatRequireAuth = response.routes;
+			dump(response.routes);
+			console.log('$rootScope.$on()->success()!');
+			if (_(routesThatRequireAuth).contains($location.path())
+					&& !AuthenticationService.isLoggedIn()) {
+					$location.path('/login');
+			}
+		}).
+		error(function(response,status){
+			console.log('$rootScope.$on()->error()!');
+			$location.path('/500');
+		});
+	});
+});
 //demoApp.run(function($rootScope, $location, $cookieStore, AuthenticationService) {
 //	var routesThatRequireAuth = [ '/users','/settings' ];
 //

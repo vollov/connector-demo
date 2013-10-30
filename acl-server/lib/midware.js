@@ -33,5 +33,13 @@ module.exports = {
 				}
 			});
 		}
+	},
+	
+	/**
+	 * Authorization: check if the user with tokenid has rights to access the api 
+	 */
+	authorization: function(tokenid, url) {
+		//return {status: status_code, message : 'xxxx'}
+	}
 	}
 }
