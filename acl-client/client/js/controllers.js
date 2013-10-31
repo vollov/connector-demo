@@ -3,6 +3,7 @@
 ///////////////// User Start///////////////////////
 demoApp.controller('UserCtrl', function ($scope, $http, User) {
 	$scope.users = User.query();
+
 /*
 	$http.jsonp('http://localhost:3000/api/user?callback=JSON_CALLBACK').
 		success(function(data) {

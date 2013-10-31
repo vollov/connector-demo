@@ -54,6 +54,9 @@ demoApp.config(function($httpProvider) {
 	$httpProvider.responseInterceptors.push(logsOutUserOn401);
 });
 
+
+
+
 //.when('/login', {
 //	controller : 'LoginCtrl',
 //	templateUrl : 'views/login.html'
