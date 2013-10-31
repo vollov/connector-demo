@@ -41,5 +41,4 @@ module.exports = {
 	authorization: function(tokenid, url) {
 		//return {status: status_code, message : 'xxxx'}
 	}
-	}
 }
