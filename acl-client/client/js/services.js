@@ -1,7 +1,7 @@
 'use strict';
 //10.100.78.143
-var resourceRoot = 'http://localhost\\:3000';
-var httpRoot = 'http://localhost:3000';
+var resourceRoot = 'http://192.168.1.109\\:3000';
+var httpRoot = 'http://192.168.1.109:3000';
 
 demoApp.factory('User', function($resource, SessionService) {
 	var tokenid = SessionService.get('tid');
@@ -100,16 +100,22 @@ demoApp.factory("FlashService", ['$rootScope', function($rootScope) {
 }]);
 
 demoApp.run(function($rootScope, $location, $http, AuthenticationService){
-	var routesThatRequireAuth = [];
+	var routesRequiresNoAuth = [];
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
-		$http.post(httpRoot + '/public/login', credentials).
+		$http.get(httpRoot + '/public/routes').
 		success(function(response,status){
-			routesThatRequireAuth = response.routes;
-			dump(response.routes);
-			console.log('$rootScope.$on()->success()!');
-			if (_(routesThatRequireAuth).contains($location.path())
+			routesRequiresNoAuth = response.routes;
+			//dump(response.routes);
+			if (_(routesRequiresNoAuth).contains($location.path())) {
+				console.log('$rootScope.$on() in exampty list!' + routesRequiresNoAuth);
+			}
+			
+			if (!_(routesRequiresNoAuth).contains($location.path())
 					&& !AuthenticationService.isLoggedIn()) {
-					$location.path('/login');
+				console.log('$rootScope.$on()->need auth');
+				$location.path('/login');
+			} else {
+				console.log('$rootScope.$on()->passed');
 			}
 		}).
 		error(function(response,status){

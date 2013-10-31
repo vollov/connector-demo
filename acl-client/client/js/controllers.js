@@ -64,14 +64,15 @@ demoApp.controller('LoginCtrl', function ($scope, $location, $cookieStore, Authe
 	
 	$scope.login = function() {
 		AuthenticationService.login($scope.credentials).success(function() {
-			var nextView = $cookieStore.get('nextView');
-			$cookieStore.remove('nextView');
-			if (nextView != null) {
-				console.log('login good, get nextView=' + nextView);
-				$location.path(nextView);
-			} else {
-				$location.path('/settings');
-			}
+			$location.path('/settings');
+//			var nextView = $cookieStore.get('nextView');
+//			$cookieStore.remove('nextView');
+//			if (nextView != null) {
+//				console.log('login good, get nextView=' + nextView);
+//				$location.path(nextView);
+//			} else {
+//				$location.path('/settings');
+//			}
 		});
 //		$http({url:'/api/users', 
 //			method:'POST',
