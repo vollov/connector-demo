@@ -5,7 +5,7 @@ var db = require('../lib/db.js')
 
 module.exports = function(app) {
 	app.get('/api/message', function(req, res) {
-		db.find('message',{},{},10, function(err, messages) {
+		db.find('message',{},{},{},10, function(err, messages) {
 			if (!err) {
 				return res.send(messages);
 			} else {

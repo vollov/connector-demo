@@ -11,6 +11,24 @@ describe('Test user api', function() {
 	var token_id = 'f2cb3e8d653f46008272113c6c72422843901ef3';
 	
 	describe('Test get a list of user: GET->' + url_user_list, function() {
+		
+		var email = 'mary@demo.org';
+		
+		beforeEach(function(done) {
+			var record = [token_id, 'email', email, 'role', 1];
+			redisService.save(token_id, record, function(err, reply){
+				console.log(reply.toString());
+				done();
+			});
+		});
+		
+		afterEach(function(done){
+			redisService.remove(token_id, function(err, reply){
+				console.log(reply.toString());
+				done();
+			});
+		});
+		
 		it('request should fail when visit /api/user without tokenid', function(done) {
 			request(app)
 			.get(url_user_list)

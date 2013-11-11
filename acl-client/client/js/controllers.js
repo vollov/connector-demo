@@ -1,6 +1,23 @@
 'use strict';
 
 ///////////////// User Start///////////////////////
+demoApp.controller('PostCodeCtrl', function ($scope, $http, PostCode, $filter) {
+	//$scope.postcodeSet = PostCode.query();
+	//$scope.postcodes = $filter('paginate')(PostCode.query(), 25);
+//	PostCode.query(function(result){
+//		
+//		$scope.postcodes = $filter('paginate')(result, 25);
+//		console.log('in the query call back, size = ' + $scope.postcodes.length)
+//	});
+
+	PostCode.query().success(function(response,status){
+		//console.log('--->%j',response);
+		$scope.postcodes = $filter('paginate')(response,1,20);
+		//console.log('in the query call back, size = ' + $scope.postcodes.length)
+	});
+	
+});
+
 demoApp.controller('UserCtrl', function ($scope, $http, User) {
 	$scope.users = User.query();
 /*
@@ -23,7 +40,7 @@ demoApp.controller('UserCtrl', function ($scope, $http, User) {
 	};
 	
 	$scope.deleteUser = function(user, index) {
-		user.$delete({id:user._id});
+		user.$delete({id:user.id});
 		$scope.users.splice(index, 1);
 	};
 });

@@ -1,0 +1,9 @@
+<p>{{paginationService.pageCount()}}</p>
+<div class="pagination">
+
+	<ul>
+		<li ng-click="paginationService.setPage(i)" ng-repeat="i in [] | forLoop:0:paginationService.pageCount()" ng-class="paginationService.page==i && 'active'">
+			<a>{{i+1}}</a>
+		</li>
+	</ul>
+</div>

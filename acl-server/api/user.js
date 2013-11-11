@@ -5,7 +5,7 @@ var db = require('../lib/db.js')
 
 module.exports = function(app) {
 	app.get('/api/user', function(req, res) {
-		db.find('user',{},{},10, function(err, users) {
+		db.find('user',{},{},{},10,function(err, users) {
 			if (!err) {
 				return res.send(users);
 			} else {
@@ -53,7 +53,5 @@ module.exports = function(app) {
 			}
 		});
 	});
-	
 
-	
 };

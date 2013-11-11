@@ -2,9 +2,9 @@ var mongojs = require('mongojs');
 var db = mongojs('localhost/rental');
 
 module.exports = {
-    find : function(collection, query, projection, limit, callback) {
+    find : function(collection, query, projection, sort, limit, callback) {
 //    	projection = (typeof projection === "undefined") ? {} : projection;
-    	db.collection(collection).find(query, projection).limit(limit).toArray(callback);
+    	db.collection(collection).find(query, projection).sort(sort).limit(limit).toArray(callback);
         //console.log('find db=> ' + db + ' , coll=> ' + collection);
     },
     // callback:function(err, doc) {...};
@@ -25,7 +25,7 @@ module.exports = {
     /**
      * collection.findAndModify(criteria, sort, update[, options, callback])
      * options:
-     * remove - if set to true (default is false), removes the record from the collection. Callback function still gets the object but it doesn’t exist in the collection any more.
+     * remove - if set to true (default is false), removes the record from the collection. Callback function still gets the object but it doesnï¿½t exist in the collection any more.
      * new - if set to true, callback function returns the modified record. Default is false (original record is returned)
      * upsert - if set to true and no record matched to the query, replacement object is inserted as a new record
      */

@@ -3,7 +3,7 @@ module.exports = function(config){
     basePath : '../',
 
     files : [
-      'client/lib/angular/angular.min.js',
+      'client/lib/angular/angular.js',
       'client/lib/angular/angular-*.js',
       'test/lib/angular/angular-mocks.js',
       'client/js/**/*.js',

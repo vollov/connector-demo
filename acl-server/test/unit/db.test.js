@@ -19,7 +19,7 @@ describe('Test mongojs wrapper -- db module', function() {
 	describe('Test find function', function() {
 		// console.log('Start test find function...');
 		it('should find 5 users in test db', function(done) {
-			db.find('user', {}, {'email' : 1,  'role':1}, 10, function(err, users) {
+			db.find('user', {}, {'email' : 1,  'role':1},{}, 10, function(err, users) {
 				should.not.exist(err);
 				console.log('return ' + users.length + ' users.');
 				users.should.have.lengthOf(5);
@@ -33,7 +33,7 @@ describe('Test mongojs wrapper -- db module', function() {
 			var user = {'password': 'blah', 'is_active': true, 'email': email,'role':2};
 			db.save('user', user, function(err, user){
 				should.not.exist(err);
-				db.find('user', {},{'email' : 1,  'role':1}, 10, function(err, users) {
+				db.find('user', {},{'email' : 1,  'role':1}, {}, 10, function(err, users) {
 					should.not.exist(err);
 					users.should.have.lengthOf(6);
 					done();

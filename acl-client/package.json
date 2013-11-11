@@ -15,6 +15,6 @@
         "karma-jasmine" : "*",
         "karma-ng-scenario" : "*",
         "karma-coverage": "*",
-      "should": ">= 0.0.1"
+        "should": ">= 0.0.1"
     }
 }

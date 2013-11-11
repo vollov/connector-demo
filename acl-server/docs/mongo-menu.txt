@@ -8,6 +8,9 @@ mongoexport --db esm --collection events --out esm_events.json
 [2] import from json
 mongoimport -d esm -c events --file esm_events.json
 
+mongoimport --db users --collection contacts --type csv --file /opt/backups/contacts.csv
+mongoimport -d rental -c postcode --type csv --file ./postcode.csv --headerline
+
 [3] list index
 db.system.indexes.find()
 

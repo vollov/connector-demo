@@ -1,0 +1,25 @@
+http://nadeemkhedr.wordpress.com/2013/09/01/build-angularjs-grid-with-server-side-paging-sorting-filtering/
+http://cacodaemon.de/index.php?id=50
+
+
+Usage of the paginator
+
+The usage is as simple as possible and can be used by changing at least two parts in the template without touching existing controllers, but do not forget to inject the module. As you can see below the example controller does not need any modification:
+
+angular.module('examplePaginator', ['caco.ClientPaginate'])
+    .controller('TestCrtl', function ($scope) {
+        $scope.testValues = [];
+        for (var i = 0; i < 10000; i++) {
+            $scope.testValues.push(i);
+        }
+    });
+
+Just "pipe" the list of items in the ng-repeat directive to the paginate filter:
+
+<tr ng-repeat="value in testValues | paginate">
+    <td>{{value}}</td>
+</tr>
+
+The second task is, adding the paginator element where the paginator should get displayed, that's it.
+
+<paginator></paginator>

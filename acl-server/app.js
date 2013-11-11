@@ -28,6 +28,7 @@ app.all('/api/*', midware.authentication);
 require('./api/user')(app);
 require('./api/auth')(app);
 require('./api/message')(app);
+require('./api/postcode')(app);
 
 app.listen(3000, '0.0.0.0');
 console.log("Express server listening...");

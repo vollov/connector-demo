@@ -1,6 +1,6 @@
 'use strict';
 
-var demoApp = angular.module('appModule', [ 'ngResource', 'ngCookies' ]);
+var demoApp = angular.module('appModule', [ 'ngRoute', 'ngResource', 'ngCookies' ]);
 
 demoApp.config(function($routeProvider, $locationProvider) {
 	
@@ -13,6 +13,9 @@ demoApp.config(function($routeProvider, $locationProvider) {
 	}).when('/login', {
 		controller : 'LoginCtrl',
 		templateUrl : 'views/public/login.html'
+	}).when('/postcodes', {
+		controller : 'PostCodeCtrl',
+		templateUrl : 'views/postcode/list.html'
 	}).when('/users', {
 		controller : 'UserCtrl',
 		templateUrl : 'views/user/list.html'

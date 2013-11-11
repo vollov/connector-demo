@@ -1,13 +1,53 @@
 'use strict';
 //10.100.78.143
-var resourceRoot = 'http://192.168.1.109\\:3000';
-var httpRoot = 'http://192.168.1.109:3000';
+//var resourceRoot = 'http://192.168.1.109\\:3000';
+//var httpRoot = 'http://192.168.1.109:3000';
+
+var resourceRoot = 'http://localhost\\:3000';
+var httpRoot = 'http://localhost:3000';
 
 demoApp.factory('User', function($resource, SessionService) {
 	var tokenid = SessionService.get('tid');
 	return $resource(resourceRoot + '/api/user/:id', {id: '@id', tid: tokenid}, {
 		update: {method:'PUT'}
 	});
+});
+
+/**
+ * ?s=100&f=postcode&d=1&c=A0B2B0&tid=
+ */
+//demoApp.factory('PostCode', function($resource, SessionService){
+//	var tokenid = SessionService.get('tid');
+//	return $resource(resourceRoot + '/api/postcode/:id', {id: '@id', 
+//		tid: tokenid, s:300, f:'postcode', d:1}, {
+//		update: {method:'PUT'}
+//	});
+//});
+
+demoApp.factory('PostCode', function($http, SessionService){
+	var tokenid = SessionService.get('tid');
+	return {
+//		getById: function(id){
+//			return $http.get(httpRoot + '/api/message/:id', {params: {tid: tokenid}});
+//		},
+		query: function(){
+			return $http.get(httpRoot + '/api/postcode', {params: 
+			{tid: tokenid,s:200, f:'postcode', d:1}});
+		}
+//		save: function(message){
+//			return $http.post(httpRoot + '/public/login', message).
+//			success(function(response,status){
+//				if(status == 200){
+//					console.log('message saved: %j', response);
+//				}else{
+//					console.log('save error: %j', response);
+//				}
+//			}).
+//			error(function(response,status){
+//				console.log('save error: %j', response);
+//			});
+//		}
+	}
 });
 
 demoApp.factory('SessionService', function(){
@@ -99,6 +139,49 @@ demoApp.factory("FlashService", ['$rootScope', function($rootScope) {
 	}
 }]);
 
+/**
+ * page are set from 0 to pageCount()-1
+ */
+demoApp.factory('PaginationService', function() {
+	this.page = 0, this.rowsPerPage = 20, this.itemCount = 0;
+	
+	return {
+		setPage : function(page){
+			if(page > this.pageCount() - 1) {
+				return;
+			}
+			this.page = page;
+		},
+		nextPage : function(){
+			if(this.isLastPage()) return;
+			this.page++;
+		},
+		previousPage : function(){
+			if(this.isFirstPage()) return;
+			this.page--;
+		},
+		firstPage : function(){
+			this.page = 0;
+		},
+		lastPage : function(){
+			this.page = this.pageCount()-1;
+		},
+		isFirstPage : function(){
+			//console.log('page='+ this.page+',items=' + this.itemCount + ',size=' + this.rowsPerPage);
+			return this.page == 0;
+		},
+		isLastPage : function(){
+			return this.page == this.pageCount()-1;
+		},
+		pageCount : function(){
+			//console.log('items=' + this.itemCount + ',size=' + this.rowsPerPage);
+			return Math.ceil(parseInt(this.itemCount) / parseInt(this.rowsPerPage));
+		}
+	}
+});
+
+
+
 demoApp.run(function($rootScope, $location, $http, AuthenticationService){
 	var routesRequiresNoAuth = [];
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
@@ -124,6 +207,7 @@ demoApp.run(function($rootScope, $location, $http, AuthenticationService){
 		});
 	});
 });
+
 //demoApp.run(function($rootScope, $location, $cookieStore, AuthenticationService) {
 //	var routesThatRequireAuth = [ '/users','/settings' ];
 //
