@@ -3,6 +3,9 @@
 demoApp.directive('fdPaginator', function factory() {
 	return {
 		restrict : 'E',
+		scope : {
+			setPage : '&'
+		}
 		controller : function($scope, PaginationService) {
 			$scope.paginationService = PaginationService;
 		},

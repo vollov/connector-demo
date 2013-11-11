@@ -1,15 +1,11 @@
 'use strict';
 //10.100.78.143
-<<<<<<< HEAD
+
 //var resourceRoot = 'http://192.168.1.109\\:3000';
 //var httpRoot = 'http://192.168.1.109:3000';
 
 var resourceRoot = 'http://localhost\\:3000';
 var httpRoot = 'http://localhost:3000';
-=======
-var resourceRoot = 'http://192.168.1.106\\:3000';
-var httpRoot = 'http://192.168.1.106:3000';
->>>>>>> bd3770e5bb8d3242642b9c6a0bbba4b47b714bb8
 
 demoApp.factory('User', function($resource, SessionService) {
 	var tokenid = SessionService.get('tid');
