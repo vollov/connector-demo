@@ -1,6 +1,5 @@
 [1]view spec:
 
-
 The project will be a server and client architecture.
 
 The admin should be able to 
@@ -15,3 +14,26 @@ a visitor will be able to:
 a message processor will be able to 
 1) put messages into an email(required).
 name*/phone*/email*/city/message
+
+#################################
+# multi role security
+#################################
+
+[1] admin view spec
+1) users
+2) postcodes
+3) settings
+4) logout
+5) about
+
+[2] member view spec
+1) settings
+2) postcodes
+3) logout
+4) about
+
+[3] visitor view spec
+1) home
+2) postcodes
+3) login
+4) about

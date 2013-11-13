@@ -10,13 +10,21 @@ module.exports = function(config){
       'client/lib/underscore/underscore.min.js',
       'test/lib/angular/angular-mocks.js',
       'client/js/**/*.js',
-      'test/unit/**/*.js'
+//    'test/unit/**/*.js'
+      'test/unit/services/sessionServiceSpec.js',
+      'test/unit/services/routeServiceSpec.js',
+      'test/unit/services/flashServiceSpec.js',
+      'test/unit/services/authenticationServiceSpec.js',
+      'test/unit/services/paginationServiceSpec.js',
+      'test/unit/services/pageServiceSpec.js',
+      'test/unit/controllers/userSpec.js',
+      'test/unit/controllers/postCodeSpec.js'
     ],
 
     autoWatch : true,
     frameworks: ['jasmine'],
-//    browsers : ['Chrome'],
-    browsers : ['Firefox'],
+    browsers : ['Chrome'],
+//    browsers : ['Firefox'],
 //    browsers : ['Chromium'],
     plugins : [
             'karma-junit-reporter',

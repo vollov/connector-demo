@@ -1,17 +1,21 @@
 'use strict';
 
 ///////////////// User Start///////////////////////
-demoApp.controller('PostCodeCtrl', function ($scope, $http, $filter, PostCode) {
-	$scope.pager.page = 1;
-	$scope.pager.size = 20;
+demoApp.controller('PostCodeCtrl', function ($scope, $http, $filter, PostCode, PageService) {
+//	$scope.page = 0;
+	$scope.size = 20;
+	 
 	
 	PostCode.query().success(function(response,status){
-		$scope.postcodes.segments = $filter('paginate')(response,$scope.pager.page,$scope.pager.size);
-		$scope.postcodes = $scope.postcodes.segments;
+		$scope.segments = response;
+		$scope.postcodes = $filter('paginate')($scope.segments,0,$scope.size);
+		$scope.pageCount = PageService.pageCount($scope.segments.length, $scope.size)
 	});
 	
 	$scope.setPage = function(page){
-		scope.postcodes = $filter('paginate')($scope.postcodes.segments,page,$scope.pager.size);
+		//debugger;
+		console.log('got page=' + page);
+		$scope.postcodes = $filter('paginate')($scope.segments,page,$scope.size);
 	};
 });
 

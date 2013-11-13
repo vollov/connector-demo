@@ -28,9 +28,10 @@
 				<!--
 				<td><a class='btn btn-primary' href="/user/{{user._id}}" ng-class='{disabled: index < 0}'>Edit</a></td>
 				<td><a class='btn btn-primary' ng-click='deleteUser(user, $index)' ng-class='{disabled: index < 0}'>Delete</a></td>
+				    <fd-paginator></fd-paginator>  
 				-->
 			<tr>
 		</tbody>
 	</table>
-	<fd-paginator></fd-paginator>
+<demo-caller pc="pageCount" dial="setPage(page)"></demo-caller>
 </div>

@@ -25,6 +25,8 @@ demoApp.config(function($routeProvider, $locationProvider) {
 	}).when('/user/:id', {
 		controller : 'EditUserCtrl',
 		templateUrl : 'views/user/detail.html'
+	}).when('/500', {
+		templateUrl : 'views/public/500.html'
 	}).otherwise({
 		redirectTo : '/'
 	});

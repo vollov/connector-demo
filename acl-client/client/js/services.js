@@ -1,11 +1,99 @@
 'use strict';
 //10.100.78.143
 
-//var resourceRoot = 'http://192.168.1.109\\:3000';
-//var httpRoot = 'http://192.168.1.109:3000';
+var resourceRoot = 'http://192.168.1.106\\:3000';
+var httpRoot = 'http://192.168.1.106:3000';
 
-var resourceRoot = 'http://localhost\\:3000';
-var httpRoot = 'http://localhost:3000';
+//var resourceRoot = 'http://localhost\\:3000';
+//var httpRoot = 'http://localhost:3000';
+
+demoApp.factory('AuthenticationService', function($http, $location,
+		SessionService, FlashService) {
+	var cacheSession = function(value) {
+		SessionService.set('tid', value);
+	};
+
+	var uncacheSession = function() {
+		SessionService.unset('tid');
+	};
+
+	var loginError = function(response) {
+		//console.log('calling AuthenticationService.loginError!');
+		FlashService.set(response.message);
+	};
+
+	return {
+		login : function(credentials) {
+			return $http.post(httpRoot + '/public/login', credentials).
+			success(function(response,status){
+				if(status == 200){
+					cacheSession(response.tokenid);
+					FlashService.clear();
+				}else{
+					loginError(response);
+				}
+			}).
+			error(function(response,status){
+				loginError(response);
+			});
+		},
+		logout : function() {
+			var tokenid = SessionService.get('tid');
+			var logout = $http.get(httpRoot + '/api/logout',
+					{params: {tid: tokenid}});
+			logout.success(uncacheSession);
+			return logout;
+		},
+		isLoggedIn : function() {
+			return !(SessionService.get('tid') == null);
+		}
+	};
+});
+
+demoApp.factory('SessionService', function(){
+	return {
+		get: function(key){
+			return sessionStorage.getItem(key);
+		},
+		set: function(key,value){
+			return sessionStorage.setItem(key, value);
+		},
+		unset: function(key){
+			return sessionStorage.removeItem(key);
+		}
+	};
+});
+
+demoApp.factory("FlashService", ['$rootScope', function($rootScope) {
+	return {
+		set: function(message) {
+			$rootScope.flash = message;
+		},
+		clear: function() {
+			$rootScope.flash = "";
+		},
+		get: function(){
+			return $rootScope.flash;
+		}
+	}
+}]);
+
+demoApp.factory("RouteService", function($rootScope, $http) {
+	return {
+		publicRoutes : function() {
+			if($rootScope.publicRoutes == undefined) {
+				$http.get(httpRoot + '/public/routes').
+				success(function(response,status){
+					$rootScope.publicRoutes = response.routes;
+				}).
+				error(function(response,status){
+					$location.path('/500');
+				});
+			}
+			return $rootScope.publicRoutes;
+		}
+	}
+});
 
 demoApp.factory('User', function($resource, SessionService) {
 	var tokenid = SessionService.get('tid');
@@ -32,7 +120,7 @@ demoApp.factory('PostCode', function($http, SessionService){
 //			return $http.get(httpRoot + '/api/message/:id', {params: {tid: tokenid}});
 //		},
 		query: function(){
-			return $http.get(httpRoot + '/api/postcode', {params: 
+			return $http.get(httpRoot + '/public/postcode', {params: 
 			{tid: tokenid,s:200, f:'postcode', d:1}});
 		}
 //		save: function(message){
@@ -51,94 +139,20 @@ demoApp.factory('PostCode', function($http, SessionService){
 	}
 });
 
-demoApp.factory('SessionService', function(){
+demoApp.factory('PageService', function(){
 	return {
-		get: function(key){
-			return sessionStorage.getItem(key);
+		pageCount : function(itemCount, pageSize) {
+			return Math.ceil(parseInt(itemCount) / parseInt(pageSize));
 		},
-		set: function(key,value){
-			return sessionStorage.setItem(key, value);
-		},
-		unset: function(key){
-			return sessionStorage.removeItem(key);
+		pageList : function(segment, pageCount) {
+			var result = new Array(pageCount);
+			for ( var i = 0; i < pageCount; i++) {
+				result[i] = segment*10 + i;
+			}
+			return result;
 		}
 	};
 });
-
-demoApp.factory('AuthenticationService', function($http, $location,
-		SessionService, FlashService) {
-	var cacheSession = function(value) {
-		console.log('calling cacheSession! tid=' + value);
-		SessionService.set('tid', value);
-	};
-
-	var uncacheSession = function() {
-		SessionService.unset('tid');
-	};
-
-	var loginError = function(response) {
-		console.log('calling loginError!');
-		FlashService.set(response.message);
-	};
-
-	// these routes map to stubbed API endpoints in config/server.js
-	return {
-//		login : function(credentials) {
-//			console.log('calling AuthenticationService.login! ');
-//			// var login = $http.post('/api/login', credentials);
-//			var login = $http({
-//				url : httpRoot + '/public/login',
-//				method : 'POST',
-//				data : credentials
-//			});
-//			login.success(cacheSession);
-//			login.success(FlashService.clear);
-//			login.error(loginError);
-//			return login;
-//		},
-		login : function(credentials) {
-			return $http.post(httpRoot + '/public/login', credentials).
-			success(function(response,status){
-				console.log('calling AuthenticationService.login.success!');
-				if(status == 200){
-					cacheSession(response.tokenid);
-					FlashService.clear();
-				}else{
-					loginError(response);
-				}
-			}).
-			error(function(response,status){
-				console.log('calling AuthenticationService.login.error!');
-				loginError(response);
-			});
-		},
-		logout : function() {
-			var logout = $http.get('/public/logout');
-			logout.success(uncacheSession);
-			return logout;
-		},
-		isLoggedIn : function() {
-			return !(SessionService.get('tid') == null);
-		}
-	};
-});
-
-demoApp.factory("FlashService", ['$rootScope', function($rootScope) {
-	return {
-		set: function(message) {
-			console.log('calling FlashService.set()!');
-			$rootScope.flash = message;
-		},
-		clear: function() {
-			$rootScope.flash = "";
-		},
-		get: function(){
-			console.log('calling FlashService.get()!');
-			//dump($rootScope);
-			return $rootScope.flash;
-		}
-	}
-}]);
 
 /**
  * page are set from 0 to pageCount()-1
@@ -177,6 +191,7 @@ demoApp.factory('PaginationService', function() {
 		pageCount : function(){
 			//console.log('items=' + this.itemCount + ',size=' + this.rowsPerPage);
 			return Math.ceil(parseInt(this.itemCount) / parseInt(this.rowsPerPage));
+			//return 8;
 		}
 	}
 });
