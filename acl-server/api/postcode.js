@@ -12,7 +12,7 @@ module.exports = function(app) {
 	 * first page: /api/postcode?s=500&f=postcode&d=-1
 	 * page 5: /api/postcode?s=500&f=postcode&d=-1$c=N2E4G6
 	 */
-	app.get('/api/postcode', function(req, res) {
+	app.get('/public/postcode', function(req, res) {
 		var size = 500, field = 'postcode', direction = 1, lastValue;
 		
 		if('s' in req.query){

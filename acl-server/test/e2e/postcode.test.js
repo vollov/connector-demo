@@ -7,7 +7,7 @@ var request = require('supertest')
 
 describe('Test postcode api', function() {
 	
-	var url_postcode_list = '/api/postcode';
+	var url_postcode_list = '/public/postcode';
 	var token_id = 'f2cb3e8d653f46008272113c6c72422843901ef3';
 	
 	describe('Test get postcode list by pages: GET->' + url_postcode_list, function() {

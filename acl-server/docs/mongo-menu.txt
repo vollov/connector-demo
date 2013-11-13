@@ -4,6 +4,7 @@
 
 [1] export to json
 mongoexport --db esm --collection events --out esm_events.json
+mongoexport --db rental --collection postcode --out postcode.json
 
 [2] import from json
 mongoimport -d esm -c events --file esm_events.json

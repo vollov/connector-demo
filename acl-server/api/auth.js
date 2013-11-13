@@ -42,7 +42,15 @@ module.exports = function(app) {
 		});
 	});
 	
+	app.get('/api/logout', function(req, res){
+		var tokenid = req.query.tid;
+		redisService.remove(tokenid, function(err, reply){
+			console.log(reply.toString());
+		});
+		return res.send(200, { message : 'logged out' });
+	});
+	
 	app.get('/public/routes', function(req, res){
-		return res.send(200, {routes: ['/','/login','/logout','/about']});
+		return res.send(200, {routes: ['/','/login','/logout','/postcodes','/about']});
 	});
 }
