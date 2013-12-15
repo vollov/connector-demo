@@ -1,11 +1,11 @@
 'use strict';
 //10.100.78.143
 
-var resourceRoot = 'http://192.168.1.106\\:3000';
-var httpRoot = 'http://192.168.1.106:3000';
+//var resourceRoot = 'http://192.168.1.106\\:3000';
+//var httpRoot = 'http://192.168.1.106:3000';
 
-//var resourceRoot = 'http://localhost\\:3000';
-//var httpRoot = 'http://localhost:3000';
+var resourceRoot = 'http://localhost\\:3000';
+var httpRoot = 'http://localhost:3000';
 
 demoApp.factory('AuthenticationService', function($http, $location,
 		SessionService, FlashService) {

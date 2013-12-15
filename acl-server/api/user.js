@@ -27,14 +27,14 @@ module.exports = function(app) {
 	});
 	
 	app.post('/api/user', function(req, res){
-		db.save('user', req.body)
+		db.save('user', req.body);
 		res.send(req.body);
 	});
 	
 	app.put('/api/user', function(req, res){
 		var id = req.body._id;
 		console.log('editing user id =' + id);
-		delete req.body['_id']
+		delete req.body['_id'];
 		db.update('user',  {'_id': mongojs.ObjectId(id)}, {$set: req.body}, {upsert: false, multi:false},
 			function(){
 				res.send(req.body);

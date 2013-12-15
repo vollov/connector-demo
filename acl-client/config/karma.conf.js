@@ -23,8 +23,8 @@ module.exports = function(config){
 
     autoWatch : true,
     frameworks: ['jasmine'],
-    browsers : ['Chrome'],
-//    browsers : ['Firefox'],
+//    browsers : ['Chrome'],
+    browsers : ['Firefox'],
 //    browsers : ['Chromium'],
     plugins : [
             'karma-junit-reporter',
